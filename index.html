@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Assign Code</title>
+</head>
+<body>
+  <h2>Enter Assign Code</h2>
+  <input type="password" id="code">
+  <button onclick="checkCode()">Proceed</button>
+
+  <script>
+    function checkCode() {
+      if (document.getElementById("code").value === "0000") {
+        window.location.href = "trucks.html";
+      } else {
+        alert("Invalid Code");
+      }
+    }
+  </script>
+</body>
+</html>
