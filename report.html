@@ -1,22 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Daily Report</title>
+  <title>Daily Transport Report</title>
   <link rel="stylesheet" href="style.css">
   <style>
     body { font-family: Arial; padding: 20px; }
-    .logo { height: 60px; margin-bottom: 20px; }
+    .logo { height: 60px; margin-bottom: 10px; }
     table { border-collapse: collapse; width: 100%; margin-top: 20px; }
     th, td { border: 1px solid black; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
     img { height: 25px; }
+
+    /* HIDE BUTTON WHEN PRINTING */
+    @media print {
+      button {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Company Logo -->
   <img src="assets/company-logo.png" class="logo">
+
+  <!-- Current Date -->
+  <p id="reportDate" style="font-weight:bold;"></p>
 
   <h2>Daily Transport Report</h2>
 
+  <!-- Truck Report Table -->
   <table>
     <tr>
       <th>Truck</th>
@@ -28,9 +41,16 @@
     <tbody id="reportTable"></tbody>
   </table>
 
+  <!-- Print Button -->
   <button onclick="window.print()">Print</button>
 
   <script>
+    // Set current date
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('reportDate').textContent = `Date: ${today.toLocaleDateString(undefined, options)}`;
+
+    // Load report data from localStorage
     const reportData = JSON.parse(localStorage.getItem("reportData")) || [];
     const table = document.getElementById("reportTable");
 
