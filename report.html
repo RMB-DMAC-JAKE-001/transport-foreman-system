@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daily Report</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .logo { height: 60px; margin-bottom: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid black; padding: 8px; text-align: left; }
+    img { height: 25px; }
+  </style>
+</head>
+<body>
+
+  <img src="assets/company-logo.png" class="logo">
+
+  <h2>Daily Transport Report</h2>
+
+  <table>
+    <tr>
+      <th>Truck</th>
+      <th>Mixer</th>
+      <th>Driver</th>
+      <th>File Code</th>
+      <th>Shift</th>
+    </tr>
+    <tbody id="reportTable"></tbody>
+  </table>
+
+  <button onclick="window.print()">Print</button>
+
+  <script>
+    const reportData = JSON.parse(localStorage.getItem("reportData")) || [];
+    const table = document.getElementById("reportTable");
+
+    reportData.forEach(item => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${item.truck}</td>
+        <td><img src="assets/rmb-mixer.png" alt="RMB MIXER"></td>
+        <td>${item.driver}</td>
+        <td>${item.file}</td>
+        <td>${item.shift}</td>
+      `;
+      table.appendChild(row);
+    });
+  </script>
+
+</body>
+</html>
