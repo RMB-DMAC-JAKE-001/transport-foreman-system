@@ -4,76 +4,47 @@
   <title>Truck Selection</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    body {
-      font-family: Arial;
-      padding: 20px;
-    }
-    .logo {
-      height: 60px;
-      margin-bottom: 20px;
-    }
-    .truck {
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-    }
-    .truck img {
-      height: 25px;
-      margin-left: 10px;
-    }
+    body { font-family: Arial; padding: 20px; }
+    .logo { height: 60px; margin-bottom: 20px; }
+    input[type="checkbox"] { margin-right: 10px; }
+    button { margin-top: 20px; padding: 10px 20px; font-size: 16px; }
   </style>
 </head>
 <body>
 
-  <!-- Company Logo -->
   <img src="assets/company-logo.png" class="logo">
 
-  <h2>Select Available Trucks</h2>
+  <h2>Select Trucks</h2>
 
-  <div id="truckList"></div>
+  <div id="truckList">
+    <label><input type="checkbox" value="TM-57"> TM-57 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-104"> TM-104 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-108"> TM-108 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-112"> TM-112 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-114"> TM-114 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-128"> TM-128 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-130"> TM-130 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-134"> TM-134 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-135"> TM-135 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-142"> TM-142 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-149"> TM-149 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-150"> TM-150 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-157"> TM-157 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+    <label><input type="checkbox" value="TM-120"> TM-120 <img src="assets/rmb-mixer.png" style="height:20px;"></label><br>
+  </div>
 
   <button onclick="proceed()">Proceed</button>
 
   <script>
-    // Truck list (all MIXER)
-    const trucks = [
-      "TM-57",
-      "TM-104",
-      "TM-108",
-      "TM-112",
-      "TM-114",
-      "TM-128",
-      "TM-130",
-      "TM-134",
-      "TM-135",
-      "TM-142",
-      "TM-149",
-      "TM-150",
-      "TM-157",
-      "TM-120"
-    ];
-
-    const listDiv = document.getElementById("truckList");
-
-    trucks.forEach(truck => {
-      const div = document.createElement("div");
-      div.className = "truck";
-      div.innerHTML = `
-        <input type="checkbox" value="${truck}"> ${truck}
-        <img src="assets/rmb-mixer.png" alt="RMB MIXER">
-      `;
-      listDiv.appendChild(div);
-    });
-
     function proceed() {
-      const selected = [...document.querySelectorAll("input[type=checkbox]:checked")]
-        .map(cb => cb.value);
-      if(selected.length === 0) {
-        alert("Please select at least one truck.");
+      const selectedTrucks = Array.from(document.querySelectorAll('#truckList input[type=checkbox]:checked'))
+                                  .map(cb => cb.value);
+      if(selectedTrucks.length === 0) {
+        alert('Please select at least one truck.');
         return;
       }
-      localStorage.setItem("selectedTrucks", JSON.stringify(selected));
-      window.location.href = "assign.html";
+      localStorage.setItem('selectedTrucks', JSON.stringify(selectedTrucks));
+      window.location.href = 'assign.html';
     }
   </script>
 
