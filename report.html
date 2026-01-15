@@ -11,7 +11,7 @@
     th { background-color: #f2f2f2; }
     img { height: 25px; }
 
-    /* HIDE BUTTON WHEN PRINTING */
+    /* HIDE BUTTONS WHEN PRINTING */
     @media print {
       button {
         display: none;
@@ -41,7 +41,8 @@
     <tbody id="reportTable"></tbody>
   </table>
 
-  <!-- Print Button -->
+  <!-- Modify and Print Buttons -->
+  <button onclick="editToday()">Modify Today</button>
   <button onclick="window.print()">Print</button>
 
   <script>
@@ -51,20 +52,47 @@
     document.getElementById('reportDate').textContent = `Date: ${today.toLocaleDateString(undefined, options)}`;
 
     // Load report data from localStorage
-    const reportData = JSON.parse(localStorage.getItem("reportData")) || [];
+    let reportData = JSON.parse(localStorage.getItem("reportData")) || [];
     const table = document.getElementById("reportTable");
 
-    reportData.forEach(item => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${item.truck}</td>
-        <td><img src="assets/rmb-mixer.png" alt="RMB MIXER"></td>
-        <td>${item.driver}</td>
-        <td>${item.file}</td>
-        <td>${item.shift}</td>
-      `;
-      table.appendChild(row);
-    });
+    function renderTable() {
+      table.innerHTML = ""; // Clear table first
+      reportData.forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.truck}</td>
+          <td><img src="assets/rmb-mixer.png" alt="RMB MIXER"></td>
+          <td>${item.driver}</td>
+          <td>${item.file}</td>
+          <td>${item.shift}</td>
+        `;
+        table.appendChild(row);
+      });
+    }
+
+    renderTable();
+
+    // Function to modify today's report
+    function editToday() {
+      reportData.forEach((item, index) => {
+        const driver = prompt(`Truck ${item.truck}: Enter Driver`, item.driver);
+        const file = prompt(`Truck ${item.truck}: Enter File Code`, item.file);
+        const shift = prompt(`Truck ${item.truck}: Enter Shift (Morning/Night/Double)`, item.shift);
+
+        reportData[index] = {
+          ...item,
+          driver: driver || item.driver,
+          file: file || item.file,
+          shift: shift || item.shift
+        };
+      });
+
+      // Save updated data
+      localStorage.setItem("reportData", JSON.stringify(reportData));
+
+      // Refresh table
+      renderTable();
+    }
   </script>
 
 </body>
